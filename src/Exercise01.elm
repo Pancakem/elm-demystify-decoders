@@ -1,6 +1,6 @@
 module Exercise01 exposing (decoder)
 
-import Json.Decode exposing (Decoder, fail)
+import Json.Decode exposing (Decoder, field, int)
 
 
 
@@ -26,9 +26,7 @@ import Json.Decode exposing (Decoder, fail)
 
 decoder : Decoder Int
 decoder =
-    fail "I always fail!"
-
-
+    field "" int
 
 {- Once you think you're done, run the tests for this exercise from the root of
    the project:
