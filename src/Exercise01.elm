@@ -26,7 +26,7 @@ import Json.Decode exposing (Decoder, field, int)
 
 decoder : Decoder Int
 decoder =
-    field "" int
+    Json.Decode.int
 
 {- Once you think you're done, run the tests for this exercise from the root of
    the project:
