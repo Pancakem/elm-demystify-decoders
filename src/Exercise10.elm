@@ -1,6 +1,6 @@
 module Exercise10 exposing (Person, PersonDetails, Role(..), decoder)
 
-import Json.Decode exposing (Decoder, fail)
+import Json.Decode exposing (Decoder, fail, map2, field, map3, string, list, succeed, andThen)
 
 
 
@@ -48,7 +48,33 @@ type Role
 
 decoder : Decoder (List Person)
 decoder =
-    fail "This seems like a lot of work."
+    list decodePerson
+
+decodePersonDetails : Decoder PersonDetails
+decodePersonDetails = 
+    map2 PersonDetails
+    (field "registered" string)
+    (field "aliases" (list string))
+
+decodeRole : String -> Decoder Role
+decodeRole rolestr = 
+    case rolestr of
+        "newbie" ->
+            succeed Newbie
+        "regular" ->
+            succeed Regular
+        "oldfart" ->
+            succeed OldFart
+        _ -> 
+            fail "Not anyone"
+            
+
+decodePerson : Decoder Person
+decodePerson = 
+    map3 Person
+    (field "username" string)
+    (field "role" string |> andThen decodeRole)
+    (field "details" decodePersonDetails)
 
 
 
