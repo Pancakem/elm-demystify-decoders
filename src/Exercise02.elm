@@ -22,7 +22,7 @@ import Json.Decode exposing (Decoder, field, list, string)
 
 decoder : Decoder (List String)
 decoder =
-    field "" (list string)
+    list string
 
 
 
