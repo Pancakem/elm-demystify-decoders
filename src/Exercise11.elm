@@ -1,6 +1,6 @@
 module Exercise11 exposing (decoder)
 
-import Json.Decode exposing (Decoder, fail)
+import Json.Decode exposing (Decoder, fail, list, field, int, oneOf, andThen, succeed)
 
 
 
@@ -30,8 +30,16 @@ import Json.Decode exposing (Decoder, fail)
 
 decoder : Decoder (List Int)
 decoder =
-    fail "Implement me!"
+    oneOf [intDecoder, listDecoder]
 
+intDecoder : Decoder (List Int)
+intDecoder =
+    (field "number" int)
+    |> andThen (\int -> succeed [int])
+
+listDecoder : Decoder (List Int)
+listDecoder =
+     field "number" (list int)
 
 
 {- Once you think you're done, run the tests for this exercise from the root of
